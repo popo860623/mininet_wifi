@@ -452,15 +452,8 @@ class Tracked(Mobility):
                 pos = (x, y, z)
                 coord.append((x, y, z))
         else:
-            init_pos = node.params['initPos']
-            fin_pos = node.params['finPos']
-            if hasattr(node, 'coord'):
-                for idx in range(len(node.coord) - 1):
-                    coord.append([node.coord[idx], node.coord[idx + 1]])
-            else:
-                coord1 = '%s,%s,%s' % (init_pos[0], init_pos[1], init_pos[2])
-                coord2 = '%s,%s,%s' % (fin_pos[0], fin_pos[1], fin_pos[2])
-                coord.append([coord1, coord2])
+            for idx in range(len(node.coord) - 1):
+                coord.append([node.coord[idx], node.coord[idx + 1]])
         return coord
 
     def dir(self, p1, p2):
