@@ -216,23 +216,15 @@ class ConfigMobility(Mobility):
         node = args[0]
         stage = args[1]
 
-        if 'position' in kwargs:
-            pos = kwargs['position'].split(',')
-            if stage == 'start':
-                node.params['initPos'] = self.get_position(pos)
-            elif stage == 'stop':
-                node.params['finPos'] = self.get_position(pos)
-        else:
-            if stage == 'start':
-                pos = node.coord[0].split(',')
-                node.params['initPos'] = self.get_position(pos)
-            elif stage == 'stop':
-                pos = node.coord[1].split(',')
-                node.params['finPos'] = self.get_position(pos)
-
         if stage == 'start':
+            pos = kwargs['position'].split(',') if 'position' in kwargs \
+                else node.coord[0].split(',')
+            node.params['initPos'] = self.get_position(pos)
             node.startTime = kwargs['time']
         elif stage == 'stop':
+            pos = kwargs['position'].split(',') if 'position' in kwargs \
+                else node.coord[1].split(',')
+            node.params['finPos'] = self.get_position(pos)
             node.speed = 1
             self.calculate_diff_time(node, kwargs['time'])
 
